@@ -1,0 +1,43 @@
+name: battery_high
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  go_router: ^14.2.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
+  carousel_slider: ^4.2.1
+  equatable: ^2.0.5
+  dio: ^5.4.3+1
+  freezed: ^2.5.2
+  freezed_annotation: ^2.4.1
+  flutter_bloc: ^8.1.6
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  json_serializable: ^6.8.0
+  build_runner: ^2.4.11
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Add assets from the images directory to the application.
+    - assets/images/
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+  image: assets/images/splash.png
+  color: "#FFFFFF"
+  android_12:
+    image: assets/images/splash.png
+    color: "#FFFFFF"
