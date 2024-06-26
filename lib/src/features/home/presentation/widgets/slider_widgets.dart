@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-class SliderWidgets extends StatelessWidget {
-  const SliderWidgets({
+class CarouselHome extends StatelessWidget {
+  const CarouselHome({
     super.key,
   });
 
@@ -16,7 +16,10 @@ class SliderWidgets extends StatelessWidget {
             return Container(
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(color: Colors.amber),
+                decoration: BoxDecoration(
+                  color: Colors.purple[100 * (i % 9)],
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Text(
                   'text $i',
                   style: TextStyle(fontSize: 16.0),

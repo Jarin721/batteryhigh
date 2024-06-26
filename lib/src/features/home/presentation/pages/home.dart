@@ -1,11 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../widgets/category_list.dart';
-import '../widgets/custom_title.dart';
-import '../widgets/product_list.dart';
 import '../widgets/slider_widgets.dart';
+import '../widgets/custom_title.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -17,25 +14,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initialization();
-  }
-
-  void initialization() async {
-    await Future.delayed(const Duration(seconds: 5));
-    FlutterNativeSplash.remove();
-  }
-
   List<String> categoryList = [
     'Category 1',
     'Category 2',
@@ -46,8 +24,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return CustomScrollView(slivers: <Widget>[
+      SliverAppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: const [
@@ -72,35 +50,54 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          const SliverToBoxAdapter(
-            child: CustomTitle(
-              title: "Categories",
+      SliverToBoxAdapter(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            CustomTitle(
+              title: 'Categories',
             ),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(
+            SizedBox(
               height: 100,
-              child: CategoryList(categoryList: categoryList),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: categoryList.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.pink[100 * (index % 9)],
+                    ),
+                    child: Text(categoryList[index]),
+                  );
+                },
+              ),
             ),
-          ),
-          const SliverToBoxAdapter(
-            child: SliderWidgets(),
-          ),
-          const SliverToBoxAdapter(
-            child: CustomTitle(
-              title: "Products",
-            ),
-          ),
-          const ProductList()
-        ],
+            CarouselHome(),
+            CustomTitle(title: 'Products'),
+          ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      SliverGrid(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200.0,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+          childAspectRatio: 1.0,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return Container(
+              alignment: Alignment.center,
+              color: Colors.teal[100 * (index % 9)],
+              child: Text('Grid Item $index'),
+            );
+          },
+          childCount: 20,
+        ),
       ),
-    );
+    ]);
   }
 }
